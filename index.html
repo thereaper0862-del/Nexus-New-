@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS ARCADE — Ultimate Gaming Hub</title>
+  <meta name="description" content="Cloud streaming, quick play, and retro emulation — all in one gaming hub." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Ambient background glow -->
+  <div class="bg-aurora" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand" id="brandHome">
+        <span class="brand-icon">▲</span>
+        <span class="brand-text">NEXUS<span class="brand-accent">ARCADE</span></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <button class="nav-link active" data-category="all">All Games</button>
+        <button class="nav-link" data-category="cloud">Cloud Stream</button>
+        <button class="nav-link" data-category="quick">Quick Play</button>
+        <button class="nav-link" data-category="retro">Retro & Ports</button>
+        <button class="nav-link" data-category="favorites">Favorites <span class="fav-count" id="favCount">0</span></button>
+      </nav>
+
+      <div class="header-actions">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" class="search-icon"><path d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          <input type="search" id="searchInput" placeholder="Search games..." autocomplete="off" />
+          <span class="clear-search" id="clearSearch" title="Clear">×</span>
+        </div>
+        <button class="icon-btn" id="settingsBtn" title="Settings / Self-host">
+          <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" /><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33h.09a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51h.09a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v.09a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z" /></svg>
+        </button>
+        <a class="icon-btn" id="moonlightLink" href="https://github.com/moonlight-stream/moonlight" target="_blank" rel="noopener" title="Moonlight guide">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-eyebrow">// CLOUD · WEB · RETRO</p>
+        <h1 class="hero-title">Your universe of <span class="neon-gradient">games</span>,<br />in one hub.</h1>
+        <p class="hero-sub">Stream from the cloud, jump into quick web games, or relive classics — all from one neon dashboard.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#cloud">▶ Start Streaming</a>
+          <a class="btn btn-ghost" href="#retro">🕹 Explore Retro</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num" id="statTotal">0</span><span class="stat-label">Titles</span></div>
+          <div class="stat"><span class="stat-num" id="statCloud">0</span><span class="stat-label">Cloud</span></div>
+          <div class="stat"><span class="stat-num" id="statQuick">0</span><span class="stat-label">Quick Play</span></div>
+          <div class="stat"><span class="stat-num" id="statRetro">0</span><span class="stat-label">Retro & Ports</span></div>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="hero-panel-tabs">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="tab-label">now streaming</span>
+        </div>
+        <div class="hero-panel-screen">
+          <span class="scanline" aria-hidden="true"></span>
+          <div class="screen-glow" id="heroScreenText">BOOTING NEXUS://CORE</div>
+          <div class="screen-sub" id="heroScreenSub">initializing game grid…</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter chips -->
+  <div class="container">
+    <div class="chips" id="chipRow" role="tablist" aria-label="Genre filters"></div>
+  </div>
+
+  <!-- Sections -->
+  <main class="container">
+    <section class="section" id="all">
+      <div class="section-head">
+        <h2 class="section-title">All Games</h2>
+        <span class="section-count" id="allCount">0 titles</span>
+      </div>
+      <div class="game-grid" id="gridAll"></div>
+    </section>
+
+    <section class="section" id="cloud">
+      <div class="section-head">
+        <h2 class="section-title">☁ Cloud Stream</h2>
+        <span class="section-count" id="cloudCount">0 titles</span>
+      </div>
+      <div class="game-grid" id="gridCloud"></div>
+      <div class="section-note">Tip: for Moonlight/Sunshine self-hosting, add your PC's IP in <b>Settings</b> → it's stored locally.</div>
+    </section>
+
+    <section class="section" id="quick">
+      <div class="section-head">
+        <h2 class="section-title">⚡ Quick Play</h2>
+        <span class="section-count" id="quickCount">0 titles</span>
+      </div>
+      <div class="game-grid" id="gridQuick"></div>
+    </section>
+
+    <section class="section" id="retro">
+      <div class="section-head">
+        <h2 class="section-title">🕹 Retro & Ports</h2>
+        <span class="section-count" id="retroCount">0 titles</span>
+      </div>
+      <div class="game-grid" id="gridRetro"></div>
+      <div class="section-note">Retro titles run in the browser via emulator cores. Add your own ROM/embed with the <b>+ Add Game</b> button below.</div>
+    </section>
+
+    <section class="section" id="favorites">
+      <div class="section-head">
+        <h2 class="section-title">★ Favorites</h2>
+        <span class="section-count" id="favSectionCount">0 titles</span>
+      </div>
+      <div class="game-grid" id="gridFavorites"></div>
+      <div class="empty-state" id="favEmpty">
+        <div class="empty-art">★</div>
+        <p>No favorites yet. Click the heart on any game to pin it here.</p>
+      </div>
+    </section>
+
+    <div class="section add-block">
+      <div class="add-inner">
+        <div>
+          <h3 class="add-title">Missing a game?</h3>
+          <p class="add-sub">Add any embeddable web game, emulator page, or self-hosted stream link.</p>
+        </div>
+        <button class="btn btn-primary" id="openAddBtn">+ Add Game</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>NEXUS ARCADE — fan-made hub, no copyrighted ROMs included.</span>
+      <span class="footer-links">
+        <a href="https://emulatorjs.org/" target="_blank" rel="noopener">EmulatorJS</a>
+        <a href="https://play.geforcenow.com/" target="_blank" rel="noopener">GeForce NOW</a>
+        <a href="https://www.xbox.com/en-US/play" target="_blank" rel="noopener">Xbox Cloud</a>
+        <a href="https://app.lune.cloud" target="_blank" rel="noopener">Luna</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- Play modal -->
+  <div class="modal-overlay" id="playModal" hidden>
+    <div class="modal modal-play">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="modalTitle">Game</h3>
+          <p class="modal-meta" id="modalMeta"></p>
+        </div>
+        <div class="modal-actions">
+          <button class="icon-btn" id="modalDownload" title="Download game HTML">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><path d="M7 10l5 5 5-5" /><path d="M12 15V3" /></svg>
+          </button>
+          <button class="icon-btn" id="modalFull" title="Toggle fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 00-2 2v3" /><path d="M21 8V5a2 2 0 00-2-2h-3" /><path d="M3 16v3a2 2 0 002 2h3" /><path d="M16 21h3a2 2 0 002-2v-3" /></svg>
+          </button>
+          <button class="icon-btn" id="modalFav" title="Favorite">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /></svg>
+          </button>
+          <button class="icon-btn" id="modalLaunch" title="Open in new tab">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" /><path d="M15 3h6v6" /><path d="M10 14L21 3" /></svg>
+          </button>
+          <button class="icon-btn" id="modalClose" title="Close">
+            <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="embed-frame" id="embedFrame">
+          <div class="embed-loading"><span class="spinner"></span> Loading embedded session…</div>
+        </div>
+      </div>
+      <p class="modal-note" id="modalNote"></p>
+    </div>
+  </div>
+
+  <!-- Settings modal -->
+  <div class="modal-overlay" id="settingsModal" hidden>
+    <div class="modal modal-small">
+      <div class="modal-head">
+        <h3 class="modal-title">Settings / Self-Host</h3>
+        <button class="icon-btn" data-close>
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label" for="moonIp">Moonlight / Sunshine host IP <span class="muted">(stored locally)</span></label>
+        <input class="text-input" type="text" id="moonIp" placeholder="192.168.1.50" />
+        <button class="btn btn-primary btn-block" id="saveSettings">Save Settings</button>
+        <div class="mini-status" id="settingsStatus"></div>
+        <div class="divider"></div>
+        <p class="hint">Streaming tips: install <b>Sunshine</b> (host) + <b>Moonlight</b> (client), pair them once with the 4-digit PIN, then add your host's IP above and launch the Moonlight card. Optimize with a wired connection and <b>HEVC</b> encoding for the lowest latency.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Game modal -->
+  <div class="modal-overlay" id="addModal" hidden>
+    <div class="modal modal-small">
+      <div class="modal-head">
+        <h3 class="modal-title">Add a Game</h3>
+        <button class="icon-btn" data-close>
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label">Title</label>
+        <input class="text-input" type="text" id="addTitle" placeholder="e.g. My Custom Port" />
+        <label class="field-label">Emoji / Icon</label>
+        <input class="text-input" type="text" id="addIcon" placeholder="🎮" maxlength="8" />
+        <label class="field-label">Category</label>
+        <select class="text-input" id="addCat">
+          <option value="quick">Quick Play</option>
+          <option value="cloud">Cloud Stream</option>
+          <option value="retro">Retro & Ports</option>
+        </select>
+        <label class="field-label">Genre chip</label>
+        <input class="text-input" type="text" id="addGenre" placeholder="Action" />
+        <label class="field-label">Launcher URL <span class="muted">(page to open / embed)</span></label>
+        <input class="text-input" type="url" id="addUrl" placeholder="https://example.com/game" />
+        <label class="field-label">Embed URL <span class="muted">(optional, used for in-hub player)</span></label>
+        <input class="text-input" type="url" id="addEmbed" placeholder="https://example.com/game/embed" />
+        <label class="field-label">Description</label>
+        <input class="text-input" type="text" id="addDesc" placeholder="Short description…" />
+        <div class="add-errors" id="addErrors"></div>
+        <button class="btn btn-primary btn-block" id="saveAdd">Add to Hub</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/zones.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
